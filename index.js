@@ -1,4 +1,3 @@
-
 const express = require("express");
 const bodyParser = require('body-parser');
 const JsonDB = require('node-json-db').JsonDB;
@@ -17,8 +16,8 @@ var db = new JsonDB(new Config("myDataBase", true, false, '/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/api", (req,res) => {
-  res.json({ message: "Welcome to the two factor authentication exmaple" })
+app.get("/", (req,res) => {
+  res.json({ message: "Welcome to the Two Factor Authentication" })
 });
 
 
