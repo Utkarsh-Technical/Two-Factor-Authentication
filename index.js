@@ -7,21 +7,17 @@ const speakeasy = require("speakeasy");
 
 const app = express();
 
-// The second argument is used to tell the DB to save after each push
-// If you put false, you'll have to call the save() method.
-// The third argument is to ask JsonDB to save the database in an human readable format. (default false)
-// The last argument is the separator. By default it's slash (/)
 var db = new JsonDB(new Config("myDataBase", true, false, '/'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req,res) => {
+app.get("/welcome", (req,res) => {
   res.json({ message: "Welcome to the Two Factor Authentication" })
 });
 
 
-app.post("/api/register", (req, res) => {
+app.post("/", (req, res) => {
   const id = uuid.v4();
   try {
     const path = `/user/${id}`;
@@ -37,7 +33,7 @@ app.post("/api/register", (req, res) => {
   }
 })
 
-app.post("/api/verify", (req,res) => {
+app.post("/verify", (req,res) => {
   const { userId, token } = req.body;
   try {
     // Retrieve user from database
@@ -63,7 +59,7 @@ app.post("/api/verify", (req,res) => {
   };
 })
 
-app.post("/api/validate", (req,res) => {
+app.post("/validate", (req,res) => {
   const { userId, token } = req.body;
   try {
     // Retrieve user from database
@@ -95,6 +91,3 @@ app.listen(port, () => {
   console.log(`App is running on PORT: ${port}.`);
 });
 
-/* QR Code=    https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/Inventeurs:1998utkarshshukla@gmail.com?secret=GF4XIYRIGUYUCNTDIARXOXRIOVRDWM3MF45CYMK6GBTFELDXFFSQ&issuer=Inventeurs
-https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/Inventeurs:{$emailID}?secret={$secreatID}&issuer=Inventeurs
-*/
